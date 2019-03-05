@@ -1,5 +1,5 @@
 {
-  "name": "mock-server-core",
+  "name": "ms-mock-core",
   "version": "0.0.1",
   "dependencies": {
     "cookie-parser": "^1.4.4",
