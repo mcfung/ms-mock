@@ -11,6 +11,6 @@
   },
   "license": "MIT",
   "bin": {
-    "mock-server": "./bin/cli.js"
+    "ms-mock": "./bin/cli.js"
   }
 }
