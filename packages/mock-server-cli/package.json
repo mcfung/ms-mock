@@ -9,5 +9,8 @@
     "argparse": "^1.0.10",
     "mock-server-core": "0.0.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "mock-server": "./bin/cli.js"
+  }
 }

@@ -5,4 +5,4 @@ require('@babel/register')({
     presets: ['@babel/preset-env', '@babel/preset-flow']
 });
 
-require('./cli-core');
+require('../cli-core');
