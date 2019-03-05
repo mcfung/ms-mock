@@ -9,7 +9,7 @@ const debug = require('debug')('mock-server:server');
 const http = require('http');
 
 
-export function startServer(port, config, fs, cb) {
+export function startServer({port, config, fs, configBasePath, onServerStart}) {
 
     /**
      * Get port from environment and store in Express.
@@ -17,7 +17,7 @@ export function startServer(port, config, fs, cb) {
 
     const logStream = new ServerLoggingStream();
 
-    const app = buildApp(config, logStream, fs);
+    const app = buildApp(config, logStream, fs, configBasePath);
 
     app.set('port', normalizePort(port));
 
@@ -39,8 +39,8 @@ export function startServer(port, config, fs, cb) {
      */
     server.logStream = logStream;
     server.listen(port, () => {
-        if (typeof cb === 'function'){
-            cb(server)
+        if (typeof onServerStart === 'function'){
+            onServerStart(server)
         }
     });
     return server;

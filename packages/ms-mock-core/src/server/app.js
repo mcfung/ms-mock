@@ -10,7 +10,7 @@ const logger = require('morgan');
 
 const buildRoute = require('./routes/index');
 
-function buildApp(route, logStream: ServerLoggingStream, fs) {
+function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePath) {
 
     const app = express();
 
@@ -33,7 +33,7 @@ function buildApp(route, logStream: ServerLoggingStream, fs) {
 
     _.forEach(route, c => {
         if (c.static) {
-            app.use(express.static(c.path));
+            app.use(express.static(c.path.startsWith("/") ? c.path : path.join(configBasePath, c.path)));
         } else if (c.proxy) {
             app.use(c.path, proxy(c.host, {
                 proxyReqPathResolver: (req) => {
@@ -52,7 +52,7 @@ function buildApp(route, logStream: ServerLoggingStream, fs) {
         }
     });
 
-    app.use('/', buildRoute(route, fs));
+    app.use('/', buildRoute(route, customFs));
 
     // catch 404 and forward to error handler
     app.use(function (req, res, next) {

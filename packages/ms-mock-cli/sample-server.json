@@ -7,6 +7,10 @@
       "path": "/Users/manhochung/IdeaProjects/sourcing-frontend/mock"
     },
     {
+      "static": true,
+      "path": "./bin"
+    },
+    {
       "path": "/preference/v1/me/preference",
       "method": "options",
       "combinations": [

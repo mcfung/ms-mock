@@ -59,11 +59,11 @@ function buildRoute(route, customFs) {
                             .send(file)
                             .end();
                     } catch (e) {
-                        log.error(e);
+                        console.log(e);
                         res.status(500).end();
                     }
                 } else {
-                    log.info("sending non-file content");
+                    console.log("sending non-file content");
                     res.status(combination.response.statusCode)
                         .send(combination.response.content)
                         .end();

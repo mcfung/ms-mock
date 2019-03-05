@@ -1,6 +1,7 @@
-import {startServer} from "mock-server-core";
+import {startServer} from "ms-mock-core";
 
 const fs = require('fs');
+const path = require('path');
 
 const ArgumentParser = require('argparse').ArgumentParser;
 const parser = new ArgumentParser({
@@ -10,7 +11,7 @@ const parser = new ArgumentParser({
 });
 
 parser.addArgument(
-    [ '-f', '--file' ],
+    ['-f', '--file'],
     {
         help: 'Input JSON file',
         required: true
@@ -22,8 +23,13 @@ const args = parser.parseArgs();
 
 try {
     let server = JSON.parse(fs.readFileSync(args.file));
-    startServer(server.port, server.config, null, () => {
-        console.log(`Listening to ${server.port}...`);
+    startServer({
+        port: server.port,
+        config: server.config,
+        configBasePath: path.dirname(fs.realpathSync(args.file)),
+        onServerStart: () => {
+            console.log(`Listening to ${server.port}...`);
+        }
     });
 } catch (e) {
     console.error("Config file not found.");
