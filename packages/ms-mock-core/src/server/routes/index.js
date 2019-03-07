@@ -84,4 +84,4 @@ function buildRoute(route, customFs) {
     return router;
 }
 
-module.exports = buildRoute;
+export default buildRoute;

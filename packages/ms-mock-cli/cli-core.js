@@ -32,5 +32,5 @@ try {
         }
     });
 } catch (e) {
-    console.error("Config file not found.");
+    console.error(e);
 }

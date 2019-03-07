@@ -1,14 +1,12 @@
 import ServerLoggingStream from "../common/ServerLoggingStream";
 import _ from 'lodash';
 import proxy from 'express-http-proxy';
-
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
-const buildRoute = require('./routes/index');
+import buildRoute from "./routes";
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
 function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePath) {
 
@@ -73,4 +71,4 @@ function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePat
     return app;
 }
 
-module.exports = buildApp;
+export default buildApp;
