@@ -1,13 +1,13 @@
 {
   "name": "ms-mock-cli",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "dependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/register": "^7.0.0",
     "argparse": "^1.0.10",
-    "ms-mock-core": "0.0.1"
+    "ms-mock-core": "1.0.0-alpha"
   },
   "license": "MIT",
   "bin": {

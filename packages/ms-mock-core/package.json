@@ -1,6 +1,6 @@
 {
   "name": "ms-mock-core",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
@@ -12,6 +12,6 @@
     "pug": "^2.0.3"
   },
   "main": "index.cjs.js",
-  "module": "index.es.js",
+  "module": "index.esm.js",
   "license": "MIT"
 }

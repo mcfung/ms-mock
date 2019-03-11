@@ -46,8 +46,8 @@ async function buildCore() {
         ]
     });
     await esBundle.write({
-        format: "es",
-        file: "packages/ms-mock-core/index.es.js"
+        format: "esm",
+        file: "packages/ms-mock-core/index.esm.js"
     });
     await esBundle.write({
         format: "cjs",

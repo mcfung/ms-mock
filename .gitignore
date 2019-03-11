@@ -140,3 +140,4 @@ mock-server.iml
 
 packages/ms-mock-core/index.cjs.js
 packages/ms-mock-core/index.es.js
+packages/ms-mock-core/index.esm.js
