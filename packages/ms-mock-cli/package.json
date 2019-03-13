@@ -1,5 +1,6 @@
 {
   "name": "ms-mock-cli",
+  "author": "Mike Chung <mikechung4@gmail.com>",
   "version": "1.0.0-alpha",
   "dependencies": {
     "@babel/core": "^7.3.4",
@@ -13,5 +14,12 @@
   "bin": {
     "ms-mock": "./bin/cli.js"
   },
-  "keywords": ["mock server"]
+  "files": [
+    "./bin",
+    "./cli-core.js",
+    "./LICENSE"
+  ],
+  "keywords": [
+    "mock server"
+  ]
 }

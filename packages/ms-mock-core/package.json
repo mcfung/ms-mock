@@ -1,5 +1,6 @@
 {
   "name": "ms-mock-core",
+  "author": "Mike Chung <mikechung4@gmail.com>",
   "version": "1.0.0-alpha",
   "dependencies": {
     "cookie-parser": "^1.4.4",
@@ -12,5 +13,10 @@
   "main": "index.cjs.js",
   "module": "index.esm.js",
   "license": "MIT",
+  "files": [
+    "./index.cjs.js",
+    "./index.esm.js",
+    "./LICENSE"
+  ],
   "keywords": ["mock server"]
 }
