@@ -7,8 +7,8 @@ _ms-mock-cli_ provides a CLI such that developer can simply start up a mock serv
 
 # Motivation
 During the development of microservice, often there is a case that access to a particular REST API is not available in development/test environment.
-In this case when you need to mock up the remote API call to facilitate the development.
-In some situation you might just want to proxy the API call to get rid of the CORS problem or just serve some static files from another origin.
+In this case you need to mock up the remote API call to facilitate the development.
+In some situation you might just want to proxy the API call to get rid of the CORS problem or just serve some static files from another path in file system.
 Therefore this module is created to serve this purpose.
 
 # Documentation
