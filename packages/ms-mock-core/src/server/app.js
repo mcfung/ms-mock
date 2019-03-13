@@ -28,7 +28,7 @@ function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePat
     _.forEach(route, c => {
         switch (c.type) {
             case 'static':
-                app.use(express.static(c.path.startsWith("/") ? c.path : path.join(configBasePath, c.path)));
+                app.use(express.static(c.path.isAbsolute(c.path) ? c.path : path.join(configBasePath, c.path)));
                 break;
             case 'proxy':
                 app.use(c.path, proxy(c.host, {
