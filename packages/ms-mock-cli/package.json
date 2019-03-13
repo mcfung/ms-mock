@@ -1,14 +1,14 @@
 {
   "name": "ms-mock-cli",
   "author": "Mike Chung <mikechung4@gmail.com>",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "dependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/register": "^7.0.0",
     "argparse": "^1.0.10",
-    "ms-mock-core": "1.0.0-alpha"
+    "ms-mock-core": "1.0.0-alpha.2"
   },
   "license": "MIT",
   "bin": {
