@@ -1,7 +1,7 @@
 {
   "name": "ms-mock-cli",
   "author": "Mike Chung <mikechung4@gmail.com>",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.1",
   "dependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
