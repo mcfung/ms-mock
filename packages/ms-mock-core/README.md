@@ -43,7 +43,7 @@ After this method is executed, an ExpressJS server will be started.
 ##### port: number
 The port number of the mock server
 
-##### config: Array<RouteConfig>
+##### config: Array\<RouteConfig\>
 A list of config objects of the mock server. This config objects describe what request should be served and what should be responded.
 Currently the config object can define 3 types of request:
 
@@ -79,7 +79,7 @@ Used by `proxy` config only. The request received by the mock server will be pro
 Used by `combination` config. 
 This method will be passed to express route. From ExpressJS, it should be one of the HTTP methods, such as GET, PUT, POST, and so on, in lowercase.
 
-##### combinations: ?Array<RequestCombinationCriteria>
+##### combinations: ?Array\<RequestCombinationCriteria\>
 A list of combination criteria for this path.
 
 #### RequestCombinationCriteria
@@ -97,11 +97,11 @@ Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: *
 ```
 
-##### headers: ?Array<RequestMatchObject>
+##### headers: ?Array\<RequestMatchObject\>
 The query parameters of the request.
 If a request to mock matches all of the query parameters specified in this list, then it is considered as passed.
 
-##### query: ?Array<RequestMatchObject>
+##### query: ?Array\<RequestMatchObject\>
 The query parameters of the request.
 If a request to mock matches all of the query parameters specified in this list, then it is considered as passed.
 
@@ -121,7 +121,7 @@ The expected value of this parameter.
 
 #### MockResponseDescriptor
 
-##### headers: ?Array<NVP>
+##### headers: ?Array\<NVP\>
 A list of headers to be returned in this response.
 
 ##### fileContent: ?boolean
