@@ -77,7 +77,7 @@ function buildRoute(route, customFs) {
     }
 
     _.forEach(route, c => {
-        if (!c.static && !c.proxy) {
+        if (c.type === 'combinations') {
             addRoute(c, router);
         }
     });

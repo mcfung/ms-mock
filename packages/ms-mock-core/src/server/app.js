@@ -2,7 +2,6 @@ import ServerLoggingStream from "../common/ServerLoggingStream";
 import _ from 'lodash';
 import proxy from 'express-http-proxy';
 import buildRoute from "./routes";
-import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -12,9 +11,6 @@ function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePat
 
     const app = express();
 
-    // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'pug');
     app.use(logger(function (tokens, req, res) {
         return [
             tokens.method(req, res),
@@ -30,32 +26,32 @@ function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePat
     app.use(cookieParser());
 
     _.forEach(route, c => {
-        if (c.static) {
-            app.use(express.static(c.path.startsWith("/") ? c.path : path.join(configBasePath, c.path)));
-        } else if (c.proxy) {
-            app.use(c.path, proxy(c.host, {
-                proxyReqPathResolver: (req) => {
-                    const parts = req.url.split('?');
-                    const queryString = parts[1];
-                    return c.path  + (queryString ? '?' + queryString : '');
-                },
-                parseReqBody: false,
-                userResHeaderDecorator: (headers) => {
-                    console.log(headers);
-                    headers['Access-Control-Allow-Origin'] = '*';
-                    headers['Access-Control-Allow-Headers'] = '*';
-                    return headers;
-                }
-            }));
+        switch (c.type) {
+            case 'static':
+                app.use(express.static(c.path.startsWith("/") ? c.path : path.join(configBasePath, c.path)));
+                break;
+            case 'proxy':
+                app.use(c.path, proxy(c.host, {
+                    proxyReqPathResolver: (req) => {
+                        const parts = req.url.split('?');
+                        const queryString = parts[1];
+                        return c.path  + (queryString ? '?' + queryString : '');
+                    },
+                    parseReqBody: false,
+                    userResHeaderDecorator: (headers) => {
+                        console.log(headers);
+                        headers['Access-Control-Allow-Origin'] = '*';
+                        headers['Access-Control-Allow-Headers'] = '*';
+                        return headers;
+                    }
+                }));
+                break;
+            default:
+                break;
         }
     });
 
     app.use('/', buildRoute(route, customFs));
-
-    // catch 404 and forward to error handler
-    app.use(function (req, res, next) {
-        next(createError(404));
-    });
 
     // error handler
     app.use(function (err, req, res, next) {

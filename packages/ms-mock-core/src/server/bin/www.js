@@ -4,9 +4,10 @@
 
 import ServerLoggingStream from "../../common/ServerLoggingStream";
 import buildApp from "../app";
+import Debug from 'debug';
+import http from 'http';
 
-const debug = require('debug')('ms-mock-core:server');
-const http = require('http');
+const debug = Debug('ms-mock-core:server');
 
 
 export function startServer({port, config, fs, configBasePath, onServerStart}) {

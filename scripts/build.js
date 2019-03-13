@@ -14,7 +14,7 @@ const externalDeps = Object.keys(
 async function buildCore() {
     const esBundle = await rollup({
         input: "packages/ms-mock-core/main.js",
-        external: externalDeps.concat(['path', 'fs', 'stream']),
+        external: externalDeps.concat(['path', 'fs', 'stream', 'http']),
         plugins: [
             babel({
                 exclude: 'node_modules/**',

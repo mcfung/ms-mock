@@ -1,13 +1,12 @@
 import {startServer} from "ms-mock-core";
-
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const ArgumentParser = require('argparse').ArgumentParser;
 const parser = new ArgumentParser({
-    version: '0.0.1',
+    version: '1.0.0',
     addHelp: true,
-    description: 'CLI for mock-ui server'
+    description: 'CLI for ms-mock server'
 });
 
 parser.addArgument(
