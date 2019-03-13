@@ -137,3 +137,7 @@ fabric.properties
 
 mock-server.iml
 .idea
+
+packages/ms-mock-core/index.cjs.js
+packages/ms-mock-core/index.es.js
+packages/ms-mock-core/index.esm.js
