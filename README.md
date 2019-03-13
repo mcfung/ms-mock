@@ -13,5 +13,5 @@ Therefore this module is created to serve this purpose.
 
 # Documentation
 
-[Documentation of the CLI](./packages/ms-mock-cli/README.md)
-[Documentation of the ms-mock-core](./packages/ms-mock-core/README.md)
+* [Documentation of the CLI](./packages/ms-mock-cli/README.md)
+* [Documentation of the ms-mock-core](./packages/ms-mock-core/README.md)
