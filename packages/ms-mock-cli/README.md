@@ -16,5 +16,5 @@ yarn add global ms-mock-cli
 ms-mock -f <path-to-your-config>.json
 ```
 
-# Config JSON
-Please refer to ms-mock-core [README](../ms-mock-core/README.md)
+# Configuration
+Please refer to `ServerOption` in ms-mock-core [README](../ms-mock-core/README.md)

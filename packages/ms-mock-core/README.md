@@ -33,10 +33,15 @@ const server = startServer({
 
 ## API
 
-### startServer(opts: ServerOption): Server
+### startServer(opts: ServerOption): AugmentedServer
 This method will return an `Server` object created by node http module.
+The `Server` object would be augmented as documented as below.
 After this method is executed, an ExpressJS server will be started.
 
+#### AugmentedServer
+
+##### logStream: ReadableStream
+This is a node.js readable stream which will stream the request access log.
 
 #### ServerOption
 
