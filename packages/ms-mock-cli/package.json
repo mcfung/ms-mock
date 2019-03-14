@@ -2,6 +2,12 @@
   "name": "ms-mock-cli",
   "author": "Mike Chung <mikechung4@gmail.com>",
   "version": "1.0.0-alpha.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcfung/ms-mock.git",
+    "directory": "packages/ms-mock-cli"
+  },
+  "homepage": "https://github.com/mcfung/ms-mock#ms-mock",
   "dependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",

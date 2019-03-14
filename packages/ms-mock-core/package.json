@@ -2,6 +2,12 @@
   "name": "ms-mock-core",
   "author": "Mike Chung <mikechung4@gmail.com>",
   "version": "1.0.0-alpha.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcfung/ms-mock.git",
+    "directory": "packages/ms-mock-core"
+  },
+  "homepage": "https://github.com/mcfung/ms-mock#ms-mock",
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
