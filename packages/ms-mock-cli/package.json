@@ -21,9 +21,9 @@
     "ms-mock": "./bin/cli.js"
   },
   "files": [
-    "./bin",
-    "./cli-core.js",
-    "./LICENSE"
+    "bin",
+    "cli-core.js",
+    "LICENSE"
   ],
   "keywords": [
     "mock server"
