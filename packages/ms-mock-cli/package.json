@@ -1,7 +1,7 @@
 {
   "name": "ms-mock-cli",
   "author": "Mike Chung <mikechung4@gmail.com>",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/mcfung/ms-mock.git",
@@ -10,7 +10,7 @@
   "homepage": "https://github.com/mcfung/ms-mock#ms-mock",
   "dependencies": {
     "argparse": "^1.0.10",
-    "ms-mock-core": "1.0.0-alpha.5"
+    "ms-mock-core": "1.0.0-alpha.6"
   },
   "license": "MIT",
   "bin": {
@@ -18,7 +18,7 @@
   },
   "files": [
     "bin",
-    "cli-core.js",
+    "cli-core.cjs.js",
     "LICENSE"
   ],
   "keywords": [
