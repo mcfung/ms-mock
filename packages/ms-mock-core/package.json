@@ -1,7 +1,7 @@
 {
   "name": "ms-mock-core",
   "author": "Mike Chung <mikechung4@gmail.com>",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/mcfung/ms-mock.git",

@@ -7,7 +7,7 @@ npm install -g ms-mock-cli
 OR 
 
 ```bash
-yarn add global ms-mock-cli
+yarn global add ms-mock-cli
 ```
 
 # Usage

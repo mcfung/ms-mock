@@ -1,3 +1,5 @@
 import Server from './src/server/bin/www';
 
-export default Server
+export const startServer = Server.startServer;
+
+export const stopServer = Server.stopServer;

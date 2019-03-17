@@ -55,4 +55,46 @@ async function buildCore() {
     });
 }
 
+async function buildCli() {
+
+    const esBundle = await rollup({
+        input: "packages/ms-mock-cli/cli-core.js",
+        external: externalDeps.concat(['path', 'fs', 'http', 'stream']),
+        plugins: [
+            babel({
+                exclude: 'node_modules/**',
+                "presets": [
+                    [
+                        "@babel/preset-env",
+                        {
+                            "modules": false
+                        }
+                    ],
+                    [
+                        "@babel/preset-flow",
+                        {
+                            "modules": false
+                        }
+                    ]
+                ],
+                "plugins": [
+                    [
+                        "@babel/plugin-transform-async-to-generator",
+                        {
+                            "modules": false
+                        }
+                    ]
+                ]
+            }),
+            resolve(),
+            commonjs()
+        ]
+    });
+    await esBundle.write({
+        format: "cjs",
+        file: "packages/ms-mock-cli/cli-core.cjs.js"
+    });
+}
+
 buildCore();
+buildCli();
