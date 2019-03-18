@@ -93,7 +93,7 @@ Please refer to `ServerOption` in ms-mock-core [README](../ms-mock-core/README.m
               },
               {
                 "name": "access-control-allow-headers",
-                "value": "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,X-SAT,Authorization"
+                "value": "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization"
               },
               {
                 "name": "access-control-allow-methods",
