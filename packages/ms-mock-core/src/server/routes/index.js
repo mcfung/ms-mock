@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import fs from "fs";
+import path from "path";
 
 const express = require('express');
 
-function buildRoute(route, customFs) {
+function buildRoute(route, customFs, configBasePath) {
 
     const router = express.Router();
 
@@ -54,7 +55,8 @@ function buildRoute(route, customFs) {
                     try {
 
                         const finalFs = customFs || fs;
-                        let file = finalFs.readFileSync(combination.response.filePath);
+                        let file = path.isAbsolute(combination.response.filePath) ? finalFs.readFileSync(combination.response.filePath)
+                            : finalFs.readFileSync(path.join(configBasePath, combination.response.filePath));
                         res.status(combination.response.statusCode)
                             .send(file)
                             .end();

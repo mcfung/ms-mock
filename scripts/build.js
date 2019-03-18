@@ -96,5 +96,9 @@ async function buildCli() {
     });
 }
 
-buildCore();
-buildCli();
+async function buildEverything() {
+    await buildCore();
+    await buildCli();
+}
+
+buildEverything();

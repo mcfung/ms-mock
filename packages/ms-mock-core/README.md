@@ -133,7 +133,8 @@ A list of headers to be returned in this response.
 An indicator to indicate if a file should be served.
 
 ##### filePath: ?string
-The path to the file to be served. At the moment only **absolute** path is supported.
+The path to the file to be served. 
+If a relative path is provided, then it will be resolved relatively to the `configBasePath`.
 
 ##### statusCode: number
 The HTTP statusCode to be sent in the response.
