@@ -101,7 +101,7 @@ Please refer to `ServerOption` in ms-mock-core [README](https://github.com/mcfun
               },
               {
                 "name": "access-control-allow-origin",
-                "value": "https://sourcing-dev.hktdc.com:3000"
+                "value": "*"
               }
             ],
             "statusCode": 204
