@@ -1,10 +1,11 @@
 import {startServer} from "ms-mock-core";
 import fs from 'fs';
 import path from 'path';
+import pkg from './package.json'
 
 const ArgumentParser = require('argparse').ArgumentParser;
 const parser = new ArgumentParser({
-    version: '1.0.0',
+    version: pkg.version,
     addHelp: true,
     description: 'CLI for ms-mock server'
 });
