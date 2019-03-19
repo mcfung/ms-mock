@@ -2,6 +2,7 @@ const {rollup} = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
+const rollUpJson = require('rollup-plugin-json');
 const fs = require('fs');
 const path = require('path');
 
@@ -87,7 +88,8 @@ async function buildCli() {
                 ]
             }),
             resolve(),
-            commonjs()
+            commonjs(),
+            rollUpJson()
         ]
     });
     await esBundle.write({
@@ -96,5 +98,9 @@ async function buildCli() {
     });
 }
 
-buildCore();
-buildCli();
+async function buildEverything() {
+    await buildCore();
+    await buildCli();
+}
+
+buildEverything();

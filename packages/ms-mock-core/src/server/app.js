@@ -51,7 +51,7 @@ function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePat
         }
     });
 
-    app.use('/', buildRoute(route, customFs));
+    app.use('/', buildRoute(route, customFs, configBasePath));
 
     // error handler
     app.use(function (err, req, res, next) {
