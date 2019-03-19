@@ -17,7 +17,7 @@ ms-mock -f <path-to-your-config>.json
 ```
 
 # Configuration
-Please refer to `ServerOption` in ms-mock-core [README](../ms-mock-core/README.md)
+Please refer to `ServerOption` in ms-mock-core [README](https://github.com/mcfung/ms-mock/tree/master/packages/ms-mock-core)
 
 # Sample Config JSON
 
