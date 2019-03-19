@@ -9,8 +9,9 @@ OR
 yarn add ms-mock-core -dev
 ```
 
-# Usage 
+# Usage
 
+## ES6 (with babel)
 ```javascript
 import {startServer, stopServer} from "ms-mock-core";
 
@@ -29,6 +30,28 @@ const server = startServer({
             });
         }
     });
+```
+
+## Older style
+```javascript
+let startServer = require('ms-mock-core').startServer;
+let stopServer = require('ms-mock-core').stopServer;
+
+const server = startServer({
+    port: 5020,
+    config: {
+        path: "./public",
+        static: true
+    },
+    configBasePath: __dirname,
+    onServerStart: () => {
+        console.log(`Listening to 5020...`);
+        // server object can then be stopped
+        stopServer(server, () => {
+            console.log(`Server stopped`);
+        });
+    }
+});
 ```
 
 ## API
