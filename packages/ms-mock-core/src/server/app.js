@@ -4,7 +4,11 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import handlers from "./handlers";
 
-function buildApp(routes, logStream, customFs, configBasePath) {
+function buildApp(routes, logStream, customFs, configBasePath, plugins) {
+
+    let resultantPlugin = _.reduce(plugins, (result, plugin) => {
+        return {...result, ...require(`ms-mock-${plugin}`)}
+    }, {});
 
     const app = express();
 
@@ -28,10 +32,13 @@ function buildApp(routes, logStream, customFs, configBasePath) {
             app,
             basePath: configBasePath,
             config: c,
-            customFs
+            customFs,
+            pluginMatchers: resultantPlugin.matchers
         };
 
-        let handle = handlers[c.type];
+        const augmentedHandlers = {...handlers, ...resultantPlugin.handlers};
+
+        let handle = augmentedHandlers[c.type];
         if (typeof handle === "function") {
             handle(context);
         } else {

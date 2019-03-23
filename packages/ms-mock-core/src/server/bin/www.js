@@ -9,7 +9,7 @@ import http from 'http';
 
 const debug = Debug('ms-mock-core:server');
 
-export function startServer({port, config, fs, configBasePath, onServerStart}) {
+export function startServer({port, config, fs, configBasePath, onServerStart, plugins}) {
 
     /**
      * Normalize a port into a number, string, or false.
@@ -65,7 +65,7 @@ export function startServer({port, config, fs, configBasePath, onServerStart}) {
 
     const logStream = new ServerLoggingStream();
 
-    const app = buildApp(config, logStream, fs, configBasePath);
+    const app = buildApp(config, logStream, fs, configBasePath, plugins);
 
     app.set('port', normalizePort(port));
 

@@ -6,7 +6,9 @@ import Debug from "debug";
 
 const debug = Debug("ms-mock-core:route");
 
-export function addRoute(descriptor, app, customFs, basePath) {
+export function addRoute(descriptor, app, customFs, basePath, pluginMatchers) {
+
+    const augmentedMatchers = {...matchers, ...pluginMatchers};
 
     app[descriptor.method](descriptor.path, (req, res, next) => {
 
@@ -14,13 +16,13 @@ export function addRoute(descriptor, app, customFs, basePath) {
 
             const headers = criteria.headers;
             let headerCheck = _.reduce(headers, (result, header) => {
-                const match = matchers[header.matchRule];
+                const match = augmentedMatchers[header.matchRule];
                 return result && match && match(header.value, req.get(header.name));
             }, true);
 
             const queries = criteria.query;
             let queryCheck = _.reduce(queries, (result, query) => {
-                const match = matchers[query.matchRule];
+                const match = augmentedMatchers[query.matchRule];
                 return result && match && match(query.value, req.query[query.name]);
             }, true);
 
