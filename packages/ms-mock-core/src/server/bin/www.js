@@ -9,7 +9,6 @@ import http from 'http';
 
 const debug = Debug('ms-mock-core:server');
 
-
 export function startServer({port, config, fs, configBasePath, onServerStart}) {
 
     /**

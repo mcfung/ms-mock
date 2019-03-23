@@ -1,13 +1,10 @@
-import ServerLoggingStream from "../common/ServerLoggingStream";
 import _ from 'lodash';
-import proxy from 'express-http-proxy';
-import buildRoute from "./routes";
 import express from 'express';
-import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import handlers from "./handlers";
 
-function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePath) {
+function buildApp(routes, logStream, customFs, configBasePath) {
 
     const app = express();
 
@@ -25,43 +22,29 @@ function buildApp(route, logStream: ServerLoggingStream, customFs, configBasePat
     app.use(express.urlencoded({extended: false}));
     app.use(cookieParser());
 
-    _.forEach(route, c => {
-        switch (c.type) {
-            case 'static':
-                app.use(express.static(path.isAbsolute(c.path) ? c.path : path.join(configBasePath, c.path)));
-                break;
-            case 'proxy':
-                app.use(c.path, proxy(c.host, {
-                    proxyReqPathResolver: (req) => {
-                        const parts = req.url.split('?');
-                        const queryString = parts[1];
-                        return c.path  + (queryString ? '?' + queryString : '');
-                    },
-                    parseReqBody: false,
-                    userResHeaderDecorator: (headers) => {
-                        console.log(headers);
-                        headers['Access-Control-Allow-Origin'] = '*';
-                        headers['Access-Control-Allow-Headers'] = '*';
-                        return headers;
-                    }
-                }));
-                break;
-            default:
-                break;
+    _.forEach(routes, c => {
+
+        const context = {
+            app,
+            basePath: configBasePath,
+            config: c,
+            customFs
+        };
+
+        let handle = handlers[c.type];
+        if (typeof handle === "function") {
+            handle(context);
+        } else {
+            throw "Unsupported Type: " + c.type
         }
     });
 
-    app.use('/', buildRoute(route, customFs, configBasePath));
-
     // error handler
     app.use(function (err, req, res, next) {
-        // set locals, only providing error in development
-        res.locals.message = err.message;
-        res.locals.error = req.app.get('env') === 'development' ? err : {};
 
         // render the error page
         res.status(err.status || 500);
-        res.render('error');
+        res.send(err.message).end();
     });
 
     return app;
