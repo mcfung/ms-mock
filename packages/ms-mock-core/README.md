@@ -6,7 +6,7 @@ npm install --save-dev ms-mock-core
 OR
 
 ```bash
-yarn add ms-mock-core -dev
+yarn add ms-mock-core --dev
 ```
 
 # Usage
