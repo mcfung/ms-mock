@@ -1,3 +1,3 @@
-export function exactMatch(v1, v2) {
-    return v1 === v2;
+export function exactMatch(expected, actual) {
+    return expected === actual;
 }

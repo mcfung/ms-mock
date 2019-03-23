@@ -142,7 +142,11 @@ The response descriptor object. If both the headers checks and queries checks pa
 The name of the parameter. i.e. Header name or query parameter name.
 
 ##### matchRule: 'exact'
-Indicates the matchRule of this parameter. At the moment only `exact` is supported.
+Indicates the matchRule of this parameter. 
+The following matchRule are supported:
+* exact - If the provided value and the request value are the same (compared by `===`), then it is matched.
+* exists - If request value is non-empty string (checked by `!!`), then it is matched.
+* regex - Given an regular expression as string, test the request value by the regex, it is matched if it returns true.
 
 ##### value: string
 The expected value of this parameter.
