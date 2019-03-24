@@ -1,3 +1,6 @@
+# ms-mock-core
+This package provides programming interface to start up a mock API server.
+
 # Installation
 ```bash
 npm install --save-dev ms-mock-core

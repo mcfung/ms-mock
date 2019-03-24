@@ -1,3 +1,7 @@
+# ms-mock-cli
+CLI package of ms-mock-core. 
+It provides CLI to start up a mock server given an JSON configuration file.
+
 # Installation
 
 ```bash

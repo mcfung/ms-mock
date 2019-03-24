@@ -60,7 +60,7 @@ async function buildCli() {
 
     const esBundle = await rollup({
         input: "packages/ms-mock-cli/cli-core.js",
-        external: externalDeps.concat(['path', 'fs', 'http', 'stream']),
+        external: externalDeps.concat(['path', 'fs', 'http', 'stream', 'child_process', 'events', 'util']),
         plugins: [
             babel({
                 exclude: 'node_modules/**',
