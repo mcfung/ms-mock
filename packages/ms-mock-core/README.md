@@ -90,10 +90,10 @@ The callback to be triggered upon the server start and listening to the port.
 
 #### RouteConfig
 
-##### type: 'static' | 'proxy' | 'combination'
+##### type: 'static' | 'proxy' | 'combinations'
 * `static` means it will serve the files specified in `path` statically.
 * `proxy` means it will proxy the request to `host` attributes.
-* `combination` means it will serve HTTP request based on the defined combinations of HTTP method, query string, HTTP Headers and request body
+* `combinations` means it will serve HTTP request based on the defined combinations of HTTP method, query string, HTTP Headers and request body
 
 ##### path: string
 Based on which type of the config is, the `path` attribute has different meanings.
