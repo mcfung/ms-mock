@@ -3,14 +3,28 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import handlers from "./handlers";
+import matchers from "../common/matchers"
+import Debug from "debug";
+
+const debug = Debug("ms-mock-core:app");
 
 function buildApp(routes, logStream, customFs, configBasePath, plugins) {
-
     let resultantPlugin = _.reduce(plugins, (result, plugin) => {
+        debug("Applying plugin: %s", plugin);
         return {...result, ...require(`ms-mock-${plugin}`)}
     }, {});
 
     const app = express();
+
+    app.locals.matchers = {
+        ...matchers,
+        ...resultantPlugin.matchers
+    };
+
+    app.locals.handlers = {
+        ...handlers,
+        ...resultantPlugin.handlers
+    };
 
     app.use(logger(function (tokens, req, res) {
         return [
@@ -26,25 +40,25 @@ function buildApp(routes, logStream, customFs, configBasePath, plugins) {
     app.use(express.urlencoded({extended: false}));
     app.use(cookieParser());
 
+    debug("Applying routes...");
     _.forEach(routes, c => {
 
         const context = {
             app,
             basePath: configBasePath,
             config: c,
-            customFs,
-            pluginMatchers: resultantPlugin.matchers
+            customFs
         };
 
-        const augmentedHandlers = {...handlers, ...resultantPlugin.handlers};
 
-        let handle = augmentedHandlers[c.type];
+        let handle = app.locals.handlers[c.type];
         if (typeof handle === "function") {
             handle(context);
         } else {
             throw "Unsupported Type: " + c.type
         }
     });
+    debug("Applied routes");
 
     // error handler
     app.use(function (err, req, res, next) {

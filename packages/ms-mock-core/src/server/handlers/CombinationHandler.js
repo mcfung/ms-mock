@@ -1,6 +1,6 @@
 import {addRoute} from "../routes";
 
-export default ({app, customFs, basePath, config, pluginMatchers}) => {
+export default ({app, customFs, basePath, config}) => {
 
-    addRoute(config, app, customFs, basePath, pluginMatchers);
+    addRoute(config, app, customFs, basePath);
 }

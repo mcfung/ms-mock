@@ -15,6 +15,7 @@ if (commander.file) {
             port: server.port,
             config: server.config,
             configBasePath: path.dirname(fs.realpathSync(commander.file)),
+            plugins: server.plugins,
             onServerStart: () => {
                 console.log(`Listening to ${server.port}...`);
             }

@@ -1,14 +1,13 @@
 import _ from 'lodash';
 import fs from "fs";
 import path from "path";
-import matchers from "../../common/matchers";
 import Debug from "debug";
 
 const debug = Debug("ms-mock-core:route");
 
-export function addRoute(descriptor, app, customFs, basePath, pluginMatchers) {
+export function addRoute(descriptor, app, customFs, basePath) {
 
-    const augmentedMatchers = {...matchers, ...pluginMatchers};
+    const matchers = app.locals.matchers;
 
     app[descriptor.method](descriptor.path, (req, res, next) => {
 
@@ -16,14 +15,32 @@ export function addRoute(descriptor, app, customFs, basePath, pluginMatchers) {
 
             const headers = criteria.headers;
             let headerCheck = _.reduce(headers, (result, header) => {
-                const match = augmentedMatchers[header.matchRule];
-                return result && match && match(header.value, req.get(header.name));
+                if (result) {
+
+                    const match = matchers[header.matchRule];
+                    const matchResult = match && match(header.value, req.get(header.name));
+                    if (!matchResult) {
+                        debug("Unmatched header %o, value: %s", header, req.get(header.name));
+                    }
+                    return result && matchResult;
+                } else {
+                    return result;
+                }
             }, true);
 
             const queries = criteria.query;
             let queryCheck = _.reduce(queries, (result, query) => {
-                const match = augmentedMatchers[query.matchRule];
-                return result && match && match(query.value, req.query[query.name]);
+                if (result) {
+
+                    const match = matchers[query.matchRule];
+                    const matchResult = match && match(query.value, req.query[query.name]);
+                    if (!matchResult) {
+                        debug("Unmatched query %o, value: %s", query, req.query[query.name]);
+                    }
+                    return result && matchResult;
+                } else {
+                    return result;
+                }
             }, true);
 
             return !!(headerCheck && queryCheck);
@@ -41,6 +58,7 @@ export function addRoute(descriptor, app, customFs, basePath, pluginMatchers) {
             });
 
             if (matchedCombination.response.fileContent) {
+                debug("sending file content");
                 try {
 
                     const finalFs = customFs || fs;

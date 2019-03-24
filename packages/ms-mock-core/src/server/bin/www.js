@@ -7,7 +7,7 @@ import buildApp from "../app";
 import Debug from 'debug';
 import http from 'http';
 
-const debug = Debug('ms-mock-core:server');
+const debug = Debug('ms-mock-core:www');
 
 export function startServer({port, config, fs, configBasePath, onServerStart, plugins}) {
 
