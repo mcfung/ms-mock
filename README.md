@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/mcfung/ms-mock.svg?style=svg)](https://circleci.com/gh/mcfung/ms-mock)
+
 # ms-mock
 
 _ms-mock_ is a mock server for development purpose.
