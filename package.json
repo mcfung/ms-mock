@@ -32,7 +32,8 @@
       "!**/coverage/**",
       "!**/index.{cjs,esm}.js",
       "!**/*.config.js",
-      "!packages/ms-mock-cli/**/*.{js,jsx}"
+      "!packages/ms-mock-cli/**/*.{js,jsx}",
+      "!packages/ms-mock-sample-plugin/**/*.{js,jsx}"
     ],
     "roots": [
       "packages"
