@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk-node-browsers
+    steps:
+      - checkout
+
+      - run:
+          name: Install Packages
+          command: yarn isntall --frozen-lockfile
+
+      - run:
+          name: Test
+          command: yarn test
