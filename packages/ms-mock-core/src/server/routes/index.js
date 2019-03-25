@@ -1,89 +1,87 @@
 import _ from 'lodash';
 import fs from "fs";
 import path from "path";
+import Debug from "debug";
 
-const express = require('express');
+const debug = Debug("ms-mock-core:route");
 
-function buildRoute(route, customFs, configBasePath) {
+export function addRoute(descriptor, app, customFs, basePath) {
 
-    const router = express.Router();
+    const matchers = app.locals.matchers;
 
-    function addRoute(descriptor, router) {
+    app[descriptor.method](descriptor.path, (req, res, next) => {
 
-        router[descriptor.method](descriptor.path, (req, res, next) => {
+        const matchedCombination = _.find(descriptor.combinations, (criteria) => {
 
-            const combination = _.find(descriptor.combinations, (criteria) => {
+            const headers = criteria.headers;
+            let headerCheck = _.reduce(headers, (result, header) => {
+                if (result) {
 
-                const headers = criteria.headers;
-                let headerCheck = _.reduce(headers, (result, header) => {
-
-                    switch (header.matchRule) {
-                        case 'exact':
-                            return result && header.value === req.get(header.name);
-                        default:
-                            return false;
+                    const match = matchers[header.matchRule];
+                    const matchResult = match && match(header.value, req.get(header.name));
+                    if (!matchResult) {
+                        debug("Unmatched header %o, value: %s", header, req.get(header.name));
                     }
-                }, true);
-                const queries = criteria.query;
-                let queryCheck = _.reduce(queries, (result, query) => {
+                    return result && matchResult;
+                } else {
+                    return result;
+                }
+            }, true);
 
-                    switch (query.matchRule) {
-                        case 'exact':
-                            return result && query.value === req.query[query.name];
-                        default:
-                            return false;
+            const queries = criteria.query;
+            let queryCheck = _.reduce(queries, (result, query) => {
+                if (result) {
+
+                    const match = matchers[query.matchRule];
+                    const matchResult = match && match(query.value, req.query[query.name]);
+                    if (!matchResult) {
+                        debug("Unmatched query %o, value: %s", query, req.query[query.name]);
                     }
-                }, true);
+                    return result && matchResult;
+                } else {
+                    return result;
+                }
+            }, true);
 
+            return !!(headerCheck && queryCheck);
+        });
 
-                return !!(headerCheck && queryCheck);
+        if (matchedCombination) {
 
+            if (matchedCombination.cors) {
+                res.set("Access-Control-Allow-Origin", "*");
+                res.set("Access-Control-Allow-Headers", "*");
+            }
+
+            _.forEach(matchedCombination.response.headers, (header) => {
+                res.set(header.name, header.value);
             });
 
-            if (combination) {
+            if (matchedCombination.response.fileContent) {
+                debug("sending file content");
+                try {
 
-                if (combination.cors) {
-                    res.set("Access-Control-Allow-Origin", "*");
-                    res.set("Access-Control-Allow-Headers", "*");
-                }
-
-                _.forEach(combination.response.headers, (header) => {
-                    res.set(header.name, header.value);
-                });
-
-                if (combination.response.fileContent) {
-                    try {
-
-                        const finalFs = customFs || fs;
-                        let file = path.isAbsolute(combination.response.filePath) ? finalFs.readFileSync(combination.response.filePath)
-                            : finalFs.readFileSync(path.join(configBasePath, combination.response.filePath));
-                        res.status(combination.response.statusCode)
-                            .send(file)
-                            .end();
-                    } catch (e) {
-                        console.log(e);
-                        res.status(500).end();
-                    }
-                } else {
-                    console.log("sending non-file content");
-                    res.status(combination.response.statusCode)
-                        .send(combination.response.content)
+                    const finalFs = customFs || fs;
+                    let file = path.isAbsolute(matchedCombination.response.filePath)
+                        ? finalFs.readFileSync(matchedCombination.response.filePath)
+                        : finalFs.readFileSync(path.join(basePath, matchedCombination.response.filePath));
+                    res.status(matchedCombination.response.statusCode)
+                        .send(file)
                         .end();
-
+                } catch (e) {
+                    debug(e);
+                    res.status(500).end();
                 }
             } else {
-                res.set("text/plain");
-                res.status(404).send("No combination found").end();
-            }
-        });
-    }
+                debug("sending non-file content");
+                res.status(matchedCombination.response.statusCode)
+                    .send(matchedCombination.response.content)
+                    .end();
 
-    _.forEach(route, c => {
-        if (c.type === 'combinations') {
-            addRoute(c, router);
+            }
+        } else {
+            res.set("text/plain");
+            res.status(404).send("No combination found").end();
         }
     });
-    return router;
 }
-
-export default buildRoute;

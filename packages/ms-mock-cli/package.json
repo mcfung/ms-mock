@@ -9,7 +9,7 @@
   },
   "homepage": "https://github.com/mcfung/ms-mock#ms-mock",
   "dependencies": {
-    "argparse": "^1.0.10",
+    "commander": "^2.19.0",
     "ms-mock-core": "1.0.0-beta.1"
   },
   "license": "MIT",

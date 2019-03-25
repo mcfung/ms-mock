@@ -1,3 +1,6 @@
+# ms-mock-core
+This package provides programming interface to start up a mock API server.
+
 # Installation
 ```bash
 npm install --save-dev ms-mock-core
@@ -6,7 +9,7 @@ npm install --save-dev ms-mock-core
 OR
 
 ```bash
-yarn add ms-mock-core -dev
+yarn add ms-mock-core --dev
 ```
 
 # Usage
@@ -90,10 +93,10 @@ The callback to be triggered upon the server start and listening to the port.
 
 #### RouteConfig
 
-##### type: 'static' | 'proxy' | 'combination'
+##### type: 'static' | 'proxy' | 'combinations'
 * `static` means it will serve the files specified in `path` statically.
 * `proxy` means it will proxy the request to `host` attributes.
-* `combination` means it will serve HTTP request based on the defined combinations of HTTP method, query string, HTTP Headers and request body
+* `combinations` means it will serve HTTP request based on the defined combinations of HTTP method, query string, HTTP Headers and request body
 
 ##### path: string
 Based on which type of the config is, the `path` attribute has different meanings.
@@ -142,7 +145,11 @@ The response descriptor object. If both the headers checks and queries checks pa
 The name of the parameter. i.e. Header name or query parameter name.
 
 ##### matchRule: 'exact'
-Indicates the matchRule of this parameter. At the moment only `exact` is supported.
+Indicates the matchRule of this parameter. 
+The following matchRule are supported:
+* exact - If the provided value and the request value are the same (compared by `===`), then it is matched.
+* exists - If request value is non-empty string (checked by `!!`), then it is matched.
+* regex - Given an regular expression as string, test the request value by the regex, it is matched if it returns true.
 
 ##### value: string
 The expected value of this parameter.

@@ -24,5 +24,7 @@
     "./index.esm.js",
     "./LICENSE"
   ],
-  "keywords": ["mock server"]
+  "keywords": [
+    "mock server"
+  ]
 }
