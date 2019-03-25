@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/mcfung/ms-mock.svg?style=svg)](https://circleci.com/gh/mcfung/ms-mock)
+[![Coverage Status](https://coveralls.io/repos/github/mcfung/ms-mock/badge.svg?branch=master)](https://coveralls.io/github/mcfung/ms-mock?branch=master)
 
 # ms-mock
 
