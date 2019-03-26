@@ -22,7 +22,8 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "jest --coverage --coverageReporters=text-lcov | coveralls"
+    "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test-local": "jest --coverage"
   },
   "jest": {
     "collectCoverageFrom": [
