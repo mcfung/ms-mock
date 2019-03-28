@@ -1,7 +1,8 @@
 {
   "name": "ms-mock-cli",
   "author": "Mike Chung <mikechung4@gmail.com>",
-  "version": "1.0.0-beta.2",
+  "description": "CLI tool to start up a ms-mock mock server for REST API.",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/mcfung/ms-mock.git",
@@ -10,7 +11,7 @@
   "homepage": "https://github.com/mcfung/ms-mock#ms-mock",
   "dependencies": {
     "commander": "^2.19.0",
-    "ms-mock-core": "1.0.0-beta.2"
+    "ms-mock-core": "1.0.0"
   },
   "license": "MIT",
   "bin": {
@@ -22,6 +23,11 @@
     "LICENSE"
   ],
   "keywords": [
-    "mock server"
+    "mock server",
+    "mock",
+    "api",
+    "dev",
+    "stub",
+    "RESTful"
   ]
 }

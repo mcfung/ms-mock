@@ -1,7 +1,8 @@
 {
   "name": "ms-mock-core",
   "author": "Mike Chung <mikechung4@gmail.com>",
-  "version": "1.0.0-beta.2",
+  "description": "Program interface to start up a ms-mock server for mocking REST API.",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/mcfung/ms-mock.git",
@@ -25,6 +26,11 @@
     "./LICENSE"
   ],
   "keywords": [
-    "mock server"
+    "mock server",
+    "mock",
+    "api",
+    "dev",
+    "stub",
+    "RESTful"
   ]
 }
