@@ -57,28 +57,31 @@ export function addRoute(descriptor, app, customFs, basePath) {
                 res.set(header.name, header.value);
             });
 
-            if (matchedCombination.response.fileContent) {
-                debug("sending file content");
-                try {
+            const delay = matchedCombination.response.delay || 0;
+            setTimeout(() => {
+                if (matchedCombination.response.fileContent) {
+                    debug("sending file content");
+                    try {
 
-                    const finalFs = customFs || fs;
-                    let file = path.isAbsolute(matchedCombination.response.filePath)
-                        ? finalFs.readFileSync(matchedCombination.response.filePath)
-                        : finalFs.readFileSync(path.join(basePath, matchedCombination.response.filePath));
+                        const finalFs = customFs || fs;
+                        let file = path.isAbsolute(matchedCombination.response.filePath)
+                            ? finalFs.readFileSync(matchedCombination.response.filePath)
+                            : finalFs.readFileSync(path.join(basePath, matchedCombination.response.filePath));
+                        res.status(matchedCombination.response.statusCode)
+                            .send(file)
+                            .end();
+                    } catch (e) {
+                        debug(e);
+                        res.status(500).end();
+                    }
+                } else {
+                    debug("sending non-file content");
                     res.status(matchedCombination.response.statusCode)
-                        .send(file)
+                        .send(matchedCombination.response.content)
                         .end();
-                } catch (e) {
-                    debug(e);
-                    res.status(500).end();
-                }
-            } else {
-                debug("sending non-file content");
-                res.status(matchedCombination.response.statusCode)
-                    .send(matchedCombination.response.content)
-                    .end();
 
-            }
+                }
+            }, delay);
         } else {
             res.set("text/plain");
             res.status(404).send("No combination found").end();

@@ -3,7 +3,6 @@ import chaiHttp from "chai-http";
 import path from 'path';
 import buildApp from "../app";
 
-
 describe("buildApp", () => {
     let app;
 
@@ -336,5 +335,5 @@ describe("buildApp", () => {
                 expect(res.text).toBe("absolute");
                 done();
             });
-    })
+    });
 });
