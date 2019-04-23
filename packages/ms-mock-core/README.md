@@ -160,6 +160,9 @@ The expected value of this parameter.
 
 #### MockResponseDescriptor
 
+##### delay: ?number
+If specified, the response will be returned after `delay`ms.
+
 ##### headers: ?Array\<NVP\>
 A list of headers to be returned in this response.
 
