@@ -58,7 +58,6 @@ export function addRoute(descriptor, app, customFs, basePath) {
             });
 
             const delay = matchedCombination.response.delay || 0;
-            console.log(delay);
             setTimeout(() => {
                 if (matchedCombination.response.fileContent) {
                     debug("sending file content");
