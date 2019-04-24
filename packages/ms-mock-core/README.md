@@ -110,6 +110,18 @@ If it is `proxy` or `combination` config, the path indicates the path served by 
 ##### host: ?string
 Used by `proxy` config only. The request received by the mock server will be proxied to the host. The proxy function is powered by [express-http-proxy](https://github.com/villadora/express-http-proxy/issues)
 
+##### cors: ?boolean
+Used by `proxy` config only. 
+If this is true, the following CORS Header will be added to the response for all response proxied.
+
+#### proxyOptions: any
+Used by `proxy` config only.
+The object will be passed to the [express-http-proxy](https://github.com/villadora/express-http-proxy#readme) module.
+
+```
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: *
+```
 ##### method: ?string
 Used by `combination` config. 
 This method will be passed to express route. From ExpressJS, it should be one of the HTTP methods, such as GET, PUT, POST, and so on, in lowercase.

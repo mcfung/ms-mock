@@ -1,17 +1,29 @@
 import proxy from "express-http-proxy";
+import Debug from "debug";
+
+const debug = Debug("ms-mock-core:proxy-handler");
 
 export default ({app, config}) => {
-    app.use(config.path, proxy(config.host, {
+
+    debug("Proxy Options for %s: %o", config.path, config.proxyOptions);
+
+    const options = {
         proxyReqPathResolver: (req) => {
-            const parts = req.url.split('?');
-            const queryString = parts[1];
-            return config.path  + (queryString ? '?' + queryString : '');
+            return req.originalUrl;
         },
-        parseReqBody: false,
-        userResHeaderDecorator: (headers) => {
+        ...config.proxyOptions
+    };
+
+    if (config.cors) {
+        debug("Adding userResHeaderDecorator for CORS");
+        options.userResHeaderDecorator = (headers) => {
             headers['Access-Control-Allow-Origin'] = '*';
             headers['Access-Control-Allow-Headers'] = '*';
             return headers;
         }
-    }));
+    }
+
+    debug("Applying proxy middleware for %s..", config.path);
+
+    app.use(config.path, proxy(config.host, options));
 }
