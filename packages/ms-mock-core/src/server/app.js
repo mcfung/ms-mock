@@ -10,8 +10,14 @@ const debug = Debug("ms-mock-core:app");
 
 function buildApp(routes, logStream, customFs, configBasePath, plugins) {
     let resultantPlugin = _.reduce(plugins, (result, plugin) => {
-        debug("Applying plugin: %s", plugin);
-        return {...result, ...require(`ms-mock-${plugin}`)}
+        debug("Applying plugin: %o", plugin);
+
+        const loadedPlugin = typeof plugin === 'string' ? require(`ms-mock-${plugin}`) : plugin;
+
+        return {
+            matchers: {...result.matchers, ...(loadedPlugin ? loadedPlugin.matchers : undefined)},
+            handlers: {...result.handlers, ...(loadedPlugin ? loadedPlugin.handlers : undefined)},
+        }
     }, {});
 
     const app = express();
