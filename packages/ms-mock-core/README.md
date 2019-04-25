@@ -74,7 +74,7 @@ This is a node.js readable stream which will stream the request access log.
 ##### port: number
 The port number of the mock server
 
-##### plugins: ?Array\<string\> (Experimental)
+##### plugins: ?Array\<string | Plugin\> (Experimental)
 An array of strings which specify the names of the plugins. For each name specified, the package will try to prefix it with `ms-mock-` and then load it.
 Therefore consumer is responsible to ensure it's installed properly.
 
@@ -244,7 +244,7 @@ The `actual` value is the one received by the ms-mock server.
 
 The plugin author should determine if it is matched or not given the expected and actual value.
 
-All available matchers will be passed to all handlers for their own use.
+All available matchers will be passed to all handlers using `app.locals.matchers` for their own use.
 
 ## Handlers hook
 For each key defined, it can be used in `type` in `config`.

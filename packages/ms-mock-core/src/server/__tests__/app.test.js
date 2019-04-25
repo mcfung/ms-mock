@@ -336,4 +336,45 @@ describe("buildApp", () => {
                 done();
             });
     });
+
+    it('should support multiple plugins', () => {
+
+        const p1h1 = ({app, config}) => {
+
+        };
+        const p1h2 = ({app, config}) => {
+
+        };
+        const p2h1 = ({app, config}) => {
+
+        };
+        const p1m1 = (expected, actual) => {
+
+        };
+        const p2m1 = (expected, actual) => {
+
+        };
+        const app = buildApp([], null, null, __dirname, [{
+            handlers: {
+                p1h1,
+                p1h2
+            },
+            matchers: {
+                p1m1
+            }
+        }, {
+            handlers: {
+                p2h1
+            },
+            matchers: {
+                p2m1
+            }
+        }]);
+
+        expect(app.locals.handlers.p1h1 === p1h1).toBeTruthy();
+        expect(app.locals.handlers.p1h2 === p1h2).toBeTruthy();
+        expect(app.locals.handlers.p2h1 === p2h1).toBeTruthy();
+        expect(app.locals.matchers.p1m1 === p1m1).toBeTruthy();
+        expect(app.locals.matchers.p2m1 === p2m1).toBeTruthy();
+    })
 });
