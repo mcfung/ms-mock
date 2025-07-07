@@ -13,6 +13,11 @@
     "commander": "^2.19.0",
     "ms-mock-core": "1.1.0"
   },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/node": "^20.9.0",
+    "typescript": "^5.2.2"
+  },
   "license": "MIT",
   "bin": {
     "ms-mock": "./bin/cli.js"

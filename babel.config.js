@@ -1,30 +1,23 @@
-module.exports = {
-    "presets": [
+module.exports = function (api) {
+    api.cache(true);
+
+    const presets = [
         [
             "@babel/preset-env",
             {
                 targets: {
-                    node: 'current',
-                },
+                    node: "10"
+                }
             }
         ],
-        [
-            "@babel/preset-flow",
-            {
-                targets: {
-                    node: 'current',
-                },
-            }
-        ]
-    ],
-    "plugins": [
-        [
-            "@babel/plugin-transform-async-to-generator",
-            {
-                targets: {
-                    node: 'current',
-                },
-            }
-        ]
-    ]
+        "@babel/preset-typescript"
+    ];
+    const plugins = [
+        "@babel/plugin-transform-async-to-generator"
+    ];
+
+    return {
+        presets,
+        plugins
+    };
 };
