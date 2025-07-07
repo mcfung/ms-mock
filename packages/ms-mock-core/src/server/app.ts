@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import express from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import handlers from "./handlers";
@@ -8,11 +8,28 @@ import Debug from "debug";
 
 const debug = Debug("ms-mock-core:app");
 
-function buildApp(routes, logStream, customFs, configBasePath, plugins) {
-    let resultantPlugin = _.reduce(plugins, (result, plugin) => {
+interface RouteConfig {
+    type: string;
+    [key: string]: any;
+}
+
+interface Plugin {
+    matchers?: Record<string, any>;
+    handlers?: Record<string, any>;
+}
+
+interface Context {
+    app: Application;
+    basePath: string;
+    config: RouteConfig;
+    customFs?: any;
+}
+
+function buildApp(routes: RouteConfig[], logStream: any, customFs: any, configBasePath: string, plugins: (string | Plugin)[] = []): Application {
+    let resultantPlugin = _.reduce(plugins, (result: Plugin, plugin: string | Plugin) => {
         debug("Applying plugin: %o", plugin);
 
-        const loadedPlugin = typeof plugin === 'string' ? require(`ms-mock-${plugin}`) : plugin;
+        const loadedPlugin: Plugin = typeof plugin === 'string' ? require(`ms-mock-${plugin}`) : plugin;
 
         return {
             matchers: {...result.matchers, ...(loadedPlugin ? loadedPlugin.matchers : undefined)},
@@ -20,7 +37,7 @@ function buildApp(routes, logStream, customFs, configBasePath, plugins) {
         }
     }, {});
 
-    const app = express();
+    const app: Application = express();
 
     app.locals.matchers = {
         ...matchers,
@@ -47,9 +64,9 @@ function buildApp(routes, logStream, customFs, configBasePath, plugins) {
     app.use(cookieParser());
 
     debug("Applying routes...");
-    _.forEach(routes, c => {
+    _.forEach(routes, (c: RouteConfig) => {
 
-        const context = {
+        const context: Context = {
             app,
             basePath: configBasePath,
             config: c,
@@ -67,7 +84,7 @@ function buildApp(routes, logStream, customFs, configBasePath, plugins) {
     debug("Applied routes");
 
     // error handler
-    app.use(function (err, req, res, next) {
+    app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 
         // render the error page
         res.status(err.status || 500);

@@ -1,8 +1,14 @@
 import {startServer} from "ms-mock-core";
 import fs from 'fs';
 import path from 'path';
-import pkg from './package.json'
+import * as pkg from './package.json'
 import commander from "commander";
+
+interface ServerConfig {
+    port: number;
+    config: any[];
+    plugins?: any[];
+}
 
 commander.version(pkg.version)
     .option("-f, --file <file>", "Input JSON file")
@@ -10,7 +16,7 @@ commander.version(pkg.version)
 
 if (commander.file) {
     try {
-        let server = JSON.parse(fs.readFileSync(commander.file));
+        let server: ServerConfig = JSON.parse(fs.readFileSync(commander.file, 'utf8'));
         startServer({
             port: server.port,
             config: server.config,

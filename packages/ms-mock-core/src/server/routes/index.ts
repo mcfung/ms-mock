@@ -1,20 +1,55 @@
 import _ from 'lodash';
 import fs from "fs";
 import path from "path";
+import { Application, Request, Response, NextFunction } from "express";
 import Debug from "debug";
 
 const debug = Debug("ms-mock-core:route");
 
-export function addRoute(descriptor, app, customFs, basePath) {
+interface Header {
+    name: string;
+    value: string;
+    matchRule: string;
+}
+
+interface Query {
+    name: string;
+    value: string;
+    matchRule: string;
+}
+
+interface ResponseConfig {
+    statusCode: number;
+    content?: any;
+    fileContent?: boolean;
+    filePath?: string;
+    headers?: Array<{ name: string; value: string }>;
+    delay?: number;
+}
+
+interface Combination {
+    headers: Header[];
+    query: Query[];
+    response: ResponseConfig;
+    cors?: boolean;
+}
+
+interface RouteDescriptor {
+    method: string;
+    path: string;
+    combinations: Combination[];
+}
+
+export function addRoute(descriptor: RouteDescriptor, app: Application, customFs: any, basePath: string): void {
 
     const matchers = app.locals.matchers;
 
-    app[descriptor.method](descriptor.path, (req, res, next) => {
+    app[descriptor.method as keyof Application](descriptor.path, (req: Request, res: Response, next: NextFunction) => {
 
-        const matchedCombination = _.find(descriptor.combinations, (criteria) => {
+        const matchedCombination = _.find(descriptor.combinations, (criteria: Combination) => {
 
             const headers = criteria.headers;
-            let headerCheck = _.reduce(headers, (result, header) => {
+            let headerCheck = _.reduce(headers, (result: boolean, header: Header) => {
                 if (result) {
 
                     const match = matchers[header.matchRule];
@@ -29,7 +64,7 @@ export function addRoute(descriptor, app, customFs, basePath) {
             }, true);
 
             const queries = criteria.query;
-            let queryCheck = _.reduce(queries, (result, query) => {
+            let queryCheck = _.reduce(queries, (result: boolean, query: Query) => {
                 if (result) {
 
                     const match = matchers[query.matchRule];
@@ -53,7 +88,7 @@ export function addRoute(descriptor, app, customFs, basePath) {
                 res.set("Access-Control-Allow-Headers", "*");
             }
 
-            _.forEach(matchedCombination.response.headers, (header) => {
+            _.forEach(matchedCombination.response.headers, (header: { name: string; value: string }) => {
                 res.set(header.name, header.value);
             });
 
@@ -64,9 +99,9 @@ export function addRoute(descriptor, app, customFs, basePath) {
                     try {
 
                         const finalFs = customFs || fs;
-                        let file = path.isAbsolute(matchedCombination.response.filePath)
-                            ? finalFs.readFileSync(matchedCombination.response.filePath)
-                            : finalFs.readFileSync(path.join(basePath, matchedCombination.response.filePath));
+                        let file = path.isAbsolute(matchedCombination.response.filePath!)
+                            ? finalFs.readFileSync(matchedCombination.response.filePath!)
+                            : finalFs.readFileSync(path.join(basePath, matchedCombination.response.filePath!));
                         res.status(matchedCombination.response.statusCode)
                             .send(file)
                             .end();

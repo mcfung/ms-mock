@@ -9,14 +9,14 @@ export default class ServerLoggingStream extends Duplex {
         });
     }
 
-    _write(chunk: any, encoding: string, cb: Function) {
+    _write(chunk: any, encoding: string, cb: (error?: Error | null) => void): void {
         this.push(chunk);
         if (typeof cb === 'function') {
             cb();
         }
     }
 
-    _read(size: number) {
+    _read(size: number): void {
     }
 
 }

@@ -14,11 +14,15 @@ const externalDeps = Object.keys(
 
 async function buildCore() {
     const esBundle = await rollup({
-        input: "packages/ms-mock-core/main.js",
+        input: "packages/ms-mock-core/main.ts",
         external: externalDeps.concat(['path', 'fs', 'stream', 'http']),
         plugins: [
+            resolve({
+                extensions: ['.js', '.ts']
+            }),
             babel({
                 exclude: 'node_modules/**',
+                extensions: ['.js', '.ts'],
                 "presets": [
                     [
                         "@babel/preset-env",
@@ -27,7 +31,7 @@ async function buildCore() {
                         }
                     ],
                     [
-                        "@babel/preset-flow",
+                        "@babel/preset-typescript",
                         {
                             "modules": false
                         }
@@ -42,7 +46,6 @@ async function buildCore() {
                     ]
                 ]
             }),
-            resolve(),
             commonjs()
         ]
     });
@@ -59,11 +62,15 @@ async function buildCore() {
 async function buildCli() {
 
     const esBundle = await rollup({
-        input: "packages/ms-mock-cli/cli-core.js",
+        input: "packages/ms-mock-cli/cli-core.ts",
         external: externalDeps.concat(['path', 'fs', 'http', 'stream', 'child_process', 'events', 'util']),
         plugins: [
+            resolve({
+                extensions: ['.js', '.ts']
+            }),
             babel({
                 exclude: 'node_modules/**',
+                extensions: ['.js', '.ts'],
                 "presets": [
                     [
                         "@babel/preset-env",
@@ -72,7 +79,7 @@ async function buildCli() {
                         }
                     ],
                     [
-                        "@babel/preset-flow",
+                        "@babel/preset-typescript",
                         {
                             "modules": false
                         }
@@ -87,7 +94,6 @@ async function buildCli() {
                     ]
                 ]
             }),
-            resolve(),
             commonjs(),
             rollUpJson()
         ]
